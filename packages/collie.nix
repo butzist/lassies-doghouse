@@ -15,14 +15,21 @@
 # network namespace still has only `lo`; the proxy runs on the host and
 # allowlists the push-service hosts.
 #
+# The source is currently PATCHED ahead of upstream: the 1.24.1 tree plus the
+# opencode 2.1 fixes from https://github.com/AltanS/collie/pull/607, pinned by
+# the fork branch's commit. When the PR lands in an upstream tag, switch
+# `owner` back to `AltanS` and `rev` to `tag = "vX.Y.Z"`.
+#
 # To bump the version:
 #   1. change `version` and the `src` hash below (`nix-prefetch-url --unpack
-#      https://github.com/AltanS/collie/archive/refs/tags/vX.Y.Z.tar.gz`);
+#      https://github.com/AltanS/collie/archive/refs/tags/vX.Y.Z.tar.gz`, or
+#      `.../archive/<rev>.tar.gz` for a fork commit);
 #   2. from a checkout of that tag run
 #        bun2nix -l bun.lock     -o /path/to/lassies-doghouse/packages/collie-bun.nix
 #        (cd web && bun2nix -l bun.lock -o /path/to/lassies-doghouse/packages/collie-web-bun.nix)
-#      using the pinned `bun2nix` from the dev shell.
-#   3. re-apply `collie-push-proxy.patch` to the new tag (or re-spin it if
+#      using the pinned `bun2nix` from the dev shell. The two dependency sets
+#      only change with the lockfiles, so a patch on the same lock reuses them.
+#   3. re-apply `collie-push-proxy.patch` to the new tree (or re-spin it if
 #      `bridge/push.ts` moved); `nix build .#collie` fails loudly if it no
 #      longer applies, which is the point.
 #
@@ -38,13 +45,15 @@
   autoPatchelfHook,
   bun2nix,
 }: let
-  version = "1.24.0";
+  # 1.24.1 plus PR #607 (opencode 2.1 question dialogs and pre-upgrade history),
+  # taken from the fork's branch until upstream ships it.
+  version = "1.24.1+pr607";
 
   src = fetchFromGitHub {
-    owner = "AltanS";
+    owner = "butzist";
     repo = "collie";
-    tag = "v${version}";
-    hash = "sha256-7ApCMQphcUWR7T2mMP9sU2XIq5r3DjkwAT8nCo+45tY=";
+    rev = "ce71d7f913cd8aa904cb660c4c7c8db3929ba10a";
+    hash = "sha256-mqNwq3Hpm5tD42/OaOJdbGk8GmLbgnLMITo2y/UvL18=";
   };
 
   bun = pkgs.bun.overrideAttrs (finalAttrs: prevAttrs: {
