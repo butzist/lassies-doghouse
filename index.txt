@@ -1,4 +1,4 @@
-Jailed ColliePWA flake. See README.md for installation and configuration.
+Lassie's Doghouse: jailed ColliePWA flake. See README.md for installation and configuration.
 
 flake.nix        Inputs, packages, homeManagerModules, nixosModules, devShell.
 flake.lock       Locked nixpkgs/bun2nix revisions.

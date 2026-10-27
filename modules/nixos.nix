@@ -1,4 +1,4 @@
-# Publish the jailed ColliePWA bridge on the tailnet with `tailscale serve`.
+# Publish the Lassie's Doghouse bridge on the tailnet with `tailscale serve`.
 #
 # This is the only part that touches Tailscale. It runs OUTSIDE the Collie
 # jail, as root, and does exactly one thing: tell tailscaled to terminate TLS on

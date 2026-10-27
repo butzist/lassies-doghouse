@@ -1,5 +1,5 @@
 # ColliePWA (https://github.com/AltanS/collie) as a jailed systemd --user
-# service. This is the home-manager module of the `jailed-collie` flake.
+# service. This is the home-manager module of the `lassies-doghouse` flake.
 #
 # What the audit found it actually needs:
 #
@@ -89,7 +89,7 @@ in {
     package = lib.mkOption {
       type = lib.types.package;
       default = packageFor pkgs.stdenv.hostPlatform.system;
-      defaultText = lib.literalExpression "jailed-collie.packages.\${pkgs.stdenv.hostPlatform.system}.collie";
+      defaultText = lib.literalExpression "lassies-doghouse.packages.\${pkgs.stdenv.hostPlatform.system}.collie";
       description = "The ColliePWA package to run.";
     };
 

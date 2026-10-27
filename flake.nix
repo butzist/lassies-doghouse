@@ -1,5 +1,5 @@
 {
-  description = "Jailed ColliePWA: source-built Collie, a network/filesystem jail for the bridge, an allowlisted Web Push egress proxy, and an optional tailscale serve front door";
+  description = "Lassie's Doghouse: a jailed ColliePWA built from source, with a network/filesystem jail for the bridge, an allowlisted Web Push egress proxy, and an optional tailscale serve front door";
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";

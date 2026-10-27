@@ -1,7 +1,10 @@
-# jailed-collie
+# Lassie's Doghouse
 
-A Nix flake for running [ColliePWA](https://github.com/AltanS/collie) as a
-**network- and filesystem-jailed** `systemd --user` service, with an optional
+A deliberately witty name for a serious jail: Collie is the dog, and the jail is
+the doghouse.
+
+This is a Nix flake for running [ColliePWA](https://github.com/AltanS/collie) as
+a **network- and filesystem-jailed** `systemd --user` service, with an optional
 tailnet HTTPS front door and an allowlisted Web Push egress proxy.
 
 Collie is a phone web UI for the AI agents running in your terminal. Upstream
@@ -51,8 +54,8 @@ so the package does not build against a second copy:
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    jailed-collie = {
-      url = "github:butzist/jailed-collie";
+    lassies-doghouse = {
+      url = "github:butzist/lassies-doghouse";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
@@ -67,7 +70,7 @@ loopback and make the state directory private:
 ```nix
 {
   imports = [
-    inputs.jailed-collie.homeManagerModules.default
+    inputs.lassies-doghouse.homeManagerModules.default
   ];
 
   services.collie = {
@@ -107,7 +110,7 @@ machine's MagicDNS name:
 ```nix
 {
   imports = [
-    inputs.jailed-collie.nixosModules.collie-serve
+    inputs.lassies-doghouse.nixosModules.collie-serve
   ];
 
   services.collie-serve.enable = true;
@@ -255,16 +258,16 @@ bridge talks to `HERDR_SOCKET_PATH` directly. The `restart` hint printed by
 
 2. From a checkout of the new tag, regenerate both Bun dependency sets with the
    pinned `bun2nix` from `nix develop`. Point the output paths at your
-   `jailed-collie` checkout, not at the upstream tree:
+   `lassies-doghouse` checkout, not at the upstream tree:
 
    ```bash
    cd /path/to/collie-vX.Y.Z
 
    bun2nix -l bun.lock \
-     -o /path/to/jailed-collie/packages/collie-bun.nix
+     -o /path/to/lassies-doghouse/packages/collie-bun.nix
 
    (cd web && bun2nix -l bun.lock \
-     -o /path/to/jailed-collie/packages/collie-web-bun.nix)
+     -o /path/to/lassies-doghouse/packages/collie-web-bun.nix)
    ```
 
 3. Re-apply `packages/collie-push-proxy.patch` to the new tag, or re-spin it if
