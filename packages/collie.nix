@@ -19,8 +19,8 @@
 #   1. change `version` and the `src` hash below (`nix-prefetch-url --unpack
 #      https://github.com/AltanS/collie/archive/refs/tags/vX.Y.Z.tar.gz`);
 #   2. from a checkout of that tag run
-#        bun2nix -l bun.lock     -o packages/collie-bun.nix
-#        (cd web && bun2nix -l bun.lock -o ../packages/collie-web-bun.nix)
+#        bun2nix -l bun.lock     -o /path/to/jailed-collie/packages/collie-bun.nix
+#        (cd web && bun2nix -l bun.lock -o /path/to/jailed-collie/packages/collie-web-bun.nix)
 #      using the pinned `bun2nix` from the dev shell.
 #   3. re-apply `collie-push-proxy.patch` to the new tag (or re-spin it if
 #      `bridge/push.ts` moved); `nix build .#collie` fails loudly if it no

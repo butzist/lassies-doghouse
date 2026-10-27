@@ -254,11 +254,17 @@ bridge talks to `HERDR_SOCKET_PATH` directly. The `restart` hint printed by
    ```
 
 2. From a checkout of the new tag, regenerate both Bun dependency sets with the
-   pinned `bun2nix` from `nix develop`:
+   pinned `bun2nix` from `nix develop`. Point the output paths at your
+   `jailed-collie` checkout, not at the upstream tree:
 
    ```bash
-   bun2nix -l bun.lock -o packages/collie-bun.nix
-   (cd web && bun2nix -l bun.lock -o ../packages/collie-web-bun.nix)
+   cd /path/to/collie-vX.Y.Z
+
+   bun2nix -l bun.lock \
+     -o /path/to/jailed-collie/packages/collie-bun.nix
+
+   (cd web && bun2nix -l bun.lock \
+     -o /path/to/jailed-collie/packages/collie-web-bun.nix)
    ```
 
 3. Re-apply `packages/collie-push-proxy.patch` to the new tag, or re-spin it if
