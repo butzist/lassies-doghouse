@@ -1,0 +1,34 @@
+diff --git a/bridge/push.ts b/bridge/push.ts
+index 2a96b2d..e866348 100644
+--- a/bridge/push.ts
++++ b/bridge/push.ts
+@@ -195,7 +195,14 @@ function describeSendError<T>(err: T): string {
+ }
+ 
+ /** web-push delivery options (collapse topic + TTL + urgency), derived per message from its `type`. */
+-export type SendOptions = { TTL: number; topic: string; urgency?: "very-low" | "low" | "normal" | "high" };
++export type SendOptions = {
++  TTL: number;
++  topic: string;
++  urgency?: "very-low" | "low" | "normal" | "high";
++  /** Optional HTTP CONNECT proxy. The deployment sets it to a host-side,
++   *  allowlisted egress proxy; `web-push` otherwise ignores proxy env vars. */
++  proxy?: string;
++};
+ 
+ /** Delivers one payload to one subscription with the given options. Injectable so the prune/log
+  *  logic is testable. */
+@@ -407,7 +414,12 @@ export class Push {
+     // Per-message collapse topic — update and load alerts must not share the herd slot (see above).
+     const base =
+       msg.type === "update" ? UPDATE_SEND_OPTIONS : msg.type === "machine" ? MACHINE_SEND_OPTIONS : SEND_OPTIONS;
+-    const options = topic !== undefined && topicIsSendable(topic) ? { ...base, topic } : base;
++    const options: SendOptions = {
++      ...base,
++      ...(topic !== undefined && topicIsSendable(topic) ? { topic } : {}),
++    };
++    const proxy = process.env.COLLIE_PUSH_PROXY?.trim();
++    if (proxy !== undefined && proxy !== "") options.proxy = proxy;
+     await this.broadcast(JSON.stringify({ ...msg, data }), options);
+   }
+ 

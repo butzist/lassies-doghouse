@@ -1,0 +1,8 @@
+Jailed ColliePWA flake. See README.md for installation and configuration.
+
+flake.nix        Inputs, packages, homeManagerModules, nixosModules, devShell.
+flake.lock       Locked nixpkgs/bun2nix revisions.
+README.md        Security model, installation, options, pairing, push, troubleshooting.
+LICENSE          MIT.
+packages/        Source-built Collie derivations and the push proxy (see index.txt).
+modules/         Home-manager and NixOS modules (see index.txt).

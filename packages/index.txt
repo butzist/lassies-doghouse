@@ -1,0 +1,16 @@
+Source-built Collie package inputs.
+
+collie.nix          ColliePWA built from the tagged source tree: bun2nix
+                    dependency sets, Vite bundle, Bun single-file CLI, plus the
+                    collie-bridge wrapper (netns -> Unix socket -> socat).
+                    Pins Bun 1.4.4. Applies collie-push-proxy.patch so Web
+                    Push can use a host-side allowlisted CONNECT proxy.
+collie-bun.nix      bun2nix output for the root bun.lock. Regenerate on bump.
+collie-web-bun.nix  bun2nix output for web/bun.lock. Regenerate on bump.
+collie-push-proxy.py
+                    Host-side, allowlisted HTTP CONNECT proxy for Web Push.
+                    Runs outside the bridge's network namespace; listens on a
+                    Unix socket in the shared state dir.
+collie-push-proxy.patch
+                    Narrow seam in bridge/push.ts: pass COLLIE_PUSH_PROXY to
+                    web-push's per-send `proxy` option. Regenerate on bump.

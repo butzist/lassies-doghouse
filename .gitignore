@@ -1,0 +1,13 @@
+result
+result-*
+
+# Editors / shells
+.direnv/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Python bytecode from the push proxy
+__pycache__/
+*.pyc
