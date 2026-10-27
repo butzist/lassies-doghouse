@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-labelledby="title desc">
+  <title id="title">Lassie's Doghouse</title>
+  <desc id="desc">A collie peeking out from behind the bars of a doghouse, with a padlock on the door.</desc>
+
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#343f44"/>
+      <stop offset="1" stop-color="#232a2e"/>
+    </linearGradient>
+    <linearGradient id="roof" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#475258"/>
+      <stop offset="1" stop-color="#3d484d"/>
+    </linearGradient>
+    <clipPath id="doorClip">
+      <path d="M92 214 V154 a36 36 0 0 1 72 0 V214 Z"/>
+    </clipPath>
+  </defs>
+
+  <rect width="256" height="256" rx="56" fill="url(#bg)"/>
+  <rect x="4" y="4" width="248" height="248" rx="52" fill="none" stroke="#475258" stroke-width="2"/>
+
+  <!-- house body -->
+  <path d="M52 116 H204 V206 a8 8 0 0 1 -8 8 H60 a8 8 0 0 1 -8 -8 Z" fill="#343f44" stroke="#d3c6aa" stroke-width="9" stroke-linejoin="round"/>
+  <!-- roof -->
+  <path d="M32 124 L128 42 L224 124 Z" fill="url(#roof)" stroke="#d3c6aa" stroke-width="9" stroke-linejoin="round"/>
+  <!-- door -->
+  <path d="M92 214 V154 a36 36 0 0 1 72 0 V214 Z" fill="#1e2326" stroke="#d3c6aa" stroke-width="7"/>
+
+  <!-- the dog, clipped to the doorway -->
+  <g clip-path="url(#doorClip)">
+    <ellipse cx="128" cy="196" rx="30" ry="24" fill="#dbbc7f"/>
+
+    <!-- ears -->
+    <path d="M104 148 L98 116 L122 136 Z" fill="#dbbc7f"/>
+    <path d="M152 148 L158 116 L134 136 Z" fill="#dbbc7f"/>
+    <path d="M104 144 L101 124 L116 137 Z" fill="#e6a08a" opacity="0.7"/>
+    <path d="M152 144 L155 124 L140 137 Z" fill="#e6a08a" opacity="0.7"/>
+
+    <!-- head -->
+    <ellipse cx="128" cy="164" rx="28" ry="30" fill="#dbbc7f"/>
+    <!-- blaze -->
+    <path d="M128 136 C121 148 121 158 128 174 C135 158 135 148 128 136 Z" fill="#f0e6cf" opacity="0.9"/>
+    <!-- snout -->
+    <ellipse cx="128" cy="178" rx="17" ry="12" fill="#f0e6cf"/>
+    <!-- nose and mouth -->
+    <ellipse cx="128" cy="173" rx="5" ry="4" fill="#2d353b"/>
+    <path d="M128 177 v5 M128 182 q-6 5 -10 0 M128 182 q6 5 10 0" fill="none" stroke="#2d353b" stroke-width="2" stroke-linecap="round"/>
+    <!-- eyes -->
+    <circle cx="117" cy="160" r="3.5" fill="#2d353b"/>
+    <circle cx="139" cy="160" r="3.5" fill="#2d353b"/>
+    <circle cx="118" cy="159" r="1" fill="#f0e6cf"/>
+    <circle cx="140" cy="159" r="1" fill="#f0e6cf"/>
+  </g>
+
+  <!-- jail bars, over the dog -->
+  <g stroke="#7fbbb3" stroke-width="5" stroke-linecap="round">
+    <path d="M104 132 V214"/>
+    <path d="M120 122 V214"/>
+    <path d="M136 122 V214"/>
+    <path d="M152 132 V214"/>
+  </g>
+
+  <!-- padlock -->
+  <path d="M121 199 v-5 a7 7 0 0 1 14 0 v5" fill="none" stroke="#e67e80" stroke-width="4" stroke-linecap="round"/>
+  <rect x="116" y="197" width="24" height="17" rx="4" fill="#e67e80"/>
+  <circle cx="128" cy="204" r="2.5" fill="#2d353b"/>
+  <path d="M128 206 v4" stroke="#2d353b" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- ground line -->
+  <path d="M54 222 H202" stroke="#475258" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+</svg>

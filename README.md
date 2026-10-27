@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/logo.svg" alt="Lassie's Doghouse logo" width="180" />
+</p>
+
 # Lassie's Doghouse
 
 A deliberately witty name for a serious jail: Collie is the dog, and the jail is
