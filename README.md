@@ -29,7 +29,9 @@ home directory.
 
 > **Patched source.** Until upstream ships it, this flake builds the 1.24.1 tree
 > with the OpenCode 2.1 fixes from
-> [AltanS/collie#607](https://github.com/AltanS/collie/pull/607), pinned to the
+> [AltanS/collie#607](https://github.com/AltanS/collie/pull/607) plus the fork's
+> `feat/opencode-plugin` branch (an OpenCode plugin channel that reads session
+> history over a socket in the state dir), pinned to the
 > fork commit in [`packages/collie.nix`](packages/collie.nix). `collie --version`
 > still reports `1.24.1`, because the packaged tree carries no git metadata.
 
