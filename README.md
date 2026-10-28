@@ -27,15 +27,13 @@ The result is a phone UI that can reach the agents on your machine without
 giving a compromised web front a route to the internet, your SSH keys, or your
 home directory.
 
-> **Patched source.** Until upstream ships it, this flake builds the 1.24.1 tree
-> with the OpenCode 2.1 fixes from
-> [AltanS/collie#607](https://github.com/AltanS/collie/pull/607) plus the fork's
-> `feat/opencode-plugin` branch (an OpenCode plugin channel that reads session
-> history over a socket in the state dir), pinned to the
+> **Patched source.** Until upstream ships it, this flake builds the 1.24.2 tree
+> plus the fork's `feat/opencode-plugin` branch (an OpenCode plugin channel that
+> reads session history over a socket in the state dir), pinned to the
 > fork commit in [`packages/collie.nix`](packages/collie.nix). The plugin file is
 > shipped in the package and installed only with
 > `services.collie.opencodePlugin.enable`. `collie --version` still reports
-> `1.24.1`, because the packaged tree carries no git metadata.
+> `1.24.2+nogit`, because the packaged tree carries no git metadata.
 
 ## Requirements
 

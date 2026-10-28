@@ -3,10 +3,10 @@ Source-built Collie package inputs.
 collie.nix          ColliePWA built from the pinned source tree: bun2nix
                     dependency sets, Vite bundle, Bun single-file CLI, plus the
                     collie-bridge wrapper (netns -> Unix socket -> socat).
-                    Pins Bun 1.4.4. Currently the 1.24.1 fork commit on
-                    `feat/opencode-plugin`: PR #607 (OpenCode 2.1 dialogs +
-                    history) plus the plugin socket that serves history from
-                    inside OpenCode; back to the upstream tag once it lands.
+                    Pins Bun 1.4.4. Currently the 1.24.2 fork commit on
+                    `feat/opencode-plugin`: the upstream tag plus the plugin
+                    socket that serves history from inside OpenCode; back to
+                    the upstream tag once the channel lands.
                     Ships plugins/opencode/collie-opencode-bridge.js so the
                     home-manager module can install it into OpenCode.
                     Applies collie-push-proxy.patch so Web Push can use a

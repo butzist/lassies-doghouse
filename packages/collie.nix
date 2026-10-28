@@ -15,12 +15,11 @@
 # network namespace still has only `lo`; the proxy runs on the host and
 # allowlists the push-service hosts.
 #
-# The source is currently AHEAD of upstream: the 1.24.1 tree plus the opencode
-# 2.1 fixes from https://github.com/AltanS/collie/pull/607 and the fork's
+# The source is currently AHEAD of upstream: the 1.24.2 tree plus the fork's
 # `feat/opencode-plugin` branch (an opencode plugin channel that reads session
 # history over a Unix socket in the state dir), pinned by that branch's commit.
-# When both land in an upstream tag, switch `owner` back to `AltanS` and `rev`
-# to `tag = "vX.Y.Z"`.
+# The branch is rebased onto each upstream tag. When the plugin channel lands
+# upstream, switch `owner` back to `AltanS` and `rev` to `tag = "vX.Y.Z"`.
 #
 # To bump the version:
 #   1. change `version` and the `src` hash below (`nix-prefetch-url --unpack
@@ -47,16 +46,15 @@
   autoPatchelfHook,
   bun2nix,
 }: let
-  # 1.24.1 plus PR #607 (opencode 2.1 question dialogs and pre-upgrade history)
-  # and the fork's opencode plugin history channel, taken from the branch until
-  # upstream ships them.
-  version = "1.24.1+plugin";
+  # 1.24.2 plus the fork's opencode plugin history channel, taken from the
+  # branch until upstream ships it.
+  version = "1.24.2+plugin";
 
   src = fetchFromGitHub {
     owner = "butzist";
     repo = "collie";
-    rev = "c36dab19d6e2ca8ba614e5b368cf23d8b42fbc9b";
-    hash = "sha256-gXPmVkS0KVBbammZxcf4/Ae1yps/LTXNKA1YUkIRmiY=";
+    rev = "dcc2520f1af5da33c9a0d15c6b5ca7c02411c153";
+    hash = "sha256-GnHrQI7/P3T/3znK/csa/hPUydkSdCXDOx/JlpcUyrw=";
   };
 
   bun = pkgs.bun.overrideAttrs (finalAttrs: prevAttrs: {
