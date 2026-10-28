@@ -7,6 +7,8 @@ collie.nix          ColliePWA built from the pinned source tree: bun2nix
                     `feat/opencode-plugin`: PR #607 (OpenCode 2.1 dialogs +
                     history) plus the plugin socket that serves history from
                     inside OpenCode; back to the upstream tag once it lands.
+                    Ships plugins/opencode/collie-opencode-bridge.js so the
+                    home-manager module can install it into OpenCode.
                     Applies collie-push-proxy.patch so Web Push can use a
                     host-side allowlisted CONNECT proxy.
 collie-bun.nix      bun2nix output for the root bun.lock. Regenerate on bump.

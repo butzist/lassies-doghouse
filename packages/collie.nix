@@ -55,8 +55,8 @@
   src = fetchFromGitHub {
     owner = "butzist";
     repo = "collie";
-    rev = "b129b16eda4b3e253a9e2f6cbd589bb0e9a4161e";
-    hash = "sha256-e4aLMVukvYBAZHk/xZn7PclfSQ5QHbLjF6yBvKVhVgA=";
+    rev = "80262e447954a45435557607fc05a49d52a3ee11";
+    hash = "sha256-amdjoE3f9NGOV9i8Ogfl7Z0cnenmw22RqWgn/zi68bw=";
   };
 
   bun = pkgs.bun.overrideAttrs (finalAttrs: prevAttrs: {
@@ -241,6 +241,10 @@ in
       install -Dm755 ${bridge} "$out/bin/collie-bridge"
       cp -R ${web}/dist "$out/lib/collie/web/dist"
       cp herdr-plugin.toml package.json CHANGELOG.md LICENSE .env.example "$out/lib/collie/"
+      # The OpenCode plugin is a loose JS file in the source tree (not part of
+      # the compiled binary). Ship it so the home-manager module can install it
+      # into ~/.config/opencode/plugins.
+      cp -R plugins "$out/lib/collie/"
       ln -s "$out/lib/collie/bin/collie" "$out/bin/collie"
 
       runHook postInstall
@@ -251,6 +255,7 @@ in
       runHook preInstallCheck
       test -f "$out/lib/collie/herdr-plugin.toml"
       test -f "$out/lib/collie/web/dist/index.html"
+      test -f "$out/lib/collie/plugins/opencode/collie-opencode-bridge.js"
       echo "collie --version says: $("$out/bin/collie" --version)"
       runHook postInstallCheck
     '';
