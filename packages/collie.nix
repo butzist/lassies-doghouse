@@ -55,8 +55,8 @@
   src = fetchFromGitHub {
     owner = "butzist";
     repo = "collie";
-    rev = "80262e447954a45435557607fc05a49d52a3ee11";
-    hash = "sha256-amdjoE3f9NGOV9i8Ogfl7Z0cnenmw22RqWgn/zi68bw=";
+    rev = "c36dab19d6e2ca8ba614e5b368cf23d8b42fbc9b";
+    hash = "sha256-gXPmVkS0KVBbammZxcf4/Ae1yps/LTXNKA1YUkIRmiY=";
   };
 
   bun = pkgs.bun.overrideAttrs (finalAttrs: prevAttrs: {
