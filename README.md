@@ -32,8 +32,10 @@ home directory.
 > [AltanS/collie#607](https://github.com/AltanS/collie/pull/607) plus the fork's
 > `feat/opencode-plugin` branch (an OpenCode plugin channel that reads session
 > history over a socket in the state dir), pinned to the
-> fork commit in [`packages/collie.nix`](packages/collie.nix). `collie --version`
-> still reports `1.24.1`, because the packaged tree carries no git metadata.
+> fork commit in [`packages/collie.nix`](packages/collie.nix). The plugin file is
+> shipped in the package and installed only with
+> `services.collie.opencodePlugin.enable`. `collie --version` still reports
+> `1.24.1`, because the packaged tree carries no git metadata.
 
 ## Requirements
 
@@ -113,6 +115,15 @@ services.collie.readOnlyPaths = [
 # services.collie.readWritePaths = ["%h/src"];
 ```
 
+The patched tree also ships an OpenCode plugin channel. Install it into
+`~/.config/opencode/plugins` with:
+
+```nix
+services.collie.opencodePlugin.enable = true;
+```
+
+See [OpenCode plugin](#opencode-plugin) for how the socket is shared.
+
 ### NixOS: tailnet HTTPS front door
 
 The home-manager service speaks plain HTTP on `127.0.0.1:8787`. This module
@@ -158,6 +169,7 @@ proxy forwards.
 | `readWritePaths` | `[]` | Extra host paths bind-mounted read-write into the jail. |
 | `extraPackages` | `[]` | Extra binaries on the bridge's `PATH`. |
 | `environment` | `{}` | Extra environment variables. They cannot widen the netns or mounts. |
+| `opencodePlugin.enable` | `false` | Install the OpenCode history plugin into `~/.config/opencode/plugins`. |
 | `pushProxy.enable` | `false` | Start the host-side Web Push CONNECT proxy and wire the bridge to it. |
 | `pushProxy.allowHosts` | FCM, Mozilla, Apple, Windows Push | Host suffixes the proxy may reach on port 443. |
 
@@ -190,6 +202,37 @@ give it the public URL explicitly:
 ```bash
 COLLIE_PUBLIC_URL=https://legion.baboon-macaroni.ts.net collie pair
 ```
+
+## OpenCode plugin
+
+The patched Collie tree includes an OpenCode plugin channel. The bridge is the
+server: it creates `~/.local/state/collie/opencode-plugin.sock` (mode `0600` in
+the `0700` state directory) inside the jail. Because `StateDirectory=collie`
+bind-mounts that directory into the jail, the socket is already visible on the
+host; the plugin is the client and needs no extra mount of its own.
+
+Enable the install:
+
+```nix
+services.collie.opencodePlugin.enable = true;
+```
+
+This places `collie-opencode-bridge.js` in `~/.config/opencode/plugins/`, where
+OpenCode loads it automatically. The plugin resolves the socket directory in
+this order:
+
+1. `$COLLIE_STATE_DIR`
+2. `$XDG_STATE_HOME/collie`
+3. `~/.local/state/collie`
+
+The unit sets `COLLIE_STATE_DIR=%S/collie`, so all three line up in the default
+setup. If you relocate the state directory, set `COLLIE_STATE_DIR` in
+OpenCode's environment as well; the home-manager `environment` option only
+affects the jailed bridge.
+
+This channel is separate from `readOnlyPaths`: the bridge still needs
+`~/.local/share/opencode` (read-only) to read session logs, while the plugin
+socket is an additional live connection from inside OpenCode.
 
 ## Web Push
 
@@ -343,6 +386,9 @@ Expected. This flake does not install the Herdr plugin. Use
   opt-in `readOnlyPaths`/`readWritePaths` are mounted back in.
 - The state directory is `0700` and holds pairing tokens, push subscriptions,
   uploads, and the audit log.
+- The OpenCode plugin socket is `0600` in that `0700` directory and has no
+  authentication; it is a same-user channel only. The plugin file is installed
+  only when `opencodePlugin.enable` is set.
 - Web Push is client-supplied. The host proxy's allowlist, not Collie, is what
   prevents a hostile subscription endpoint from turning the sender into an
   arbitrary HTTPS client. Keep the allowlist narrow.

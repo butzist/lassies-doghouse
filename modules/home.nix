@@ -184,10 +184,31 @@ in {
         '';
       };
     };
+
+    # The bridge creates <stateDir>/opencode-plugin.sock inside the jail; the
+    # plugin runs in OpenCode on the host and connects to it. StateDirectory
+    # already shares that directory with the host, so no extra bind mount is
+    # needed. The plugin resolves COLLIE_STATE_DIR, then $XDG_STATE_HOME/collie,
+    # then ~/.local/state/collie, which matches this module's state directory.
+    # If you relocate the state dir, set COLLIE_STATE_DIR in OpenCode's
+    # environment too.
+    opencodePlugin = {
+      enable = lib.mkEnableOption ''
+        installing the Collie OpenCode plugin into
+        `~/.config/opencode/plugins/collie-opencode-bridge.js`
+      '';
+    };
   };
 
   config = lib.mkIf cfg.enable {
     home.packages = [package];
+
+    # OpenCode loads *.js files in its plugins directory automatically. The
+    # plugin is the host-side client of the socket the bridge creates in the
+    # shared state dir; it needs no mount of its own.
+    xdg.configFile = lib.mkIf cfg.opencodePlugin.enable {
+      "opencode/plugins/collie-opencode-bridge.js".source = "${package}/lib/collie/plugins/opencode/collie-opencode-bridge.js";
+    };
 
     systemd.user = {
       services = {

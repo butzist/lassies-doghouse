@@ -1,6 +1,7 @@
 Modules exported by the flake.
 
 home.nix    services.collie: the jailed systemd --user bridge, private netns,
-            Unix-socket front door, and optional Web Push egress proxy.
+            Unix-socket front door, optional Web Push egress proxy, and optional
+            OpenCode plugin install.
 nixos.nix   services.collie-serve: tailscale serve HTTPS front door outside the
             jail (MagicDNS name, tailnet only).
